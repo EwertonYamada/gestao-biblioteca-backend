@@ -3,6 +3,7 @@ package com.gestao_biblioteca_backend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +26,7 @@ public class Usuario {
     private String email;
 
     @Column(name = "data_cadastro")
-    @NotBlank(message = "Obrigatório informar a data de cadastro do usuário")
+    @NotNull(message = "Obrigatório informar a data de cadastro do usuário")
     private Date dataCadastro;
 
     @NotBlank(message = "Obrigatório informar o telefone do usuário")

@@ -10,17 +10,17 @@ import org.springframework.stereotype.Repository;
 public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
 
     @Query(nativeQuery = true,
-        value = " SELECT COUNT(e.livro_id) > 0 " +
+        value = " SELECT COUNT(*) > 0 " +
                 " FROM emprestimo e " +
                 " WHERE e.livro_id = :livroId " +
-                "   AND status = 'ATIVO'")
-    boolean verificarSeLivroPossuiEmprestimoAtivo(@Param("livroId") Long livroId);
+                "   AND e.status = 'ATIVO'")
+    Boolean verificarSeLivroPossuiEmprestimoAtivo(@Param("livroId") Long livroId);
 
     @Query(nativeQuery = true,
-        value = " SELECT COUNT(usuario_id) > 0 " +
-                " FROM emprestimo " +
-                " WHERE usuario_id = :usuarioId" +
-                "   AND status = 'ATIVO'")
-    boolean verificarSeUsuarioPossuiEmprestimoAtivo(@Param("usuarioId") Long usuarioId);
+        value = " SELECT COUNT(*) > 0 " +
+                " FROM emprestimo e " +
+                " WHERE e.usuario_id = :usuarioId" +
+                "   AND e.status = 'ATIVO'")
+    Boolean verificarSeUsuarioPossuiEmprestimoAtivo(@Param("usuarioId") Long usuarioId);
 
 }

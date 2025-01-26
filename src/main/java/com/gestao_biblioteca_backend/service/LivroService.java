@@ -7,16 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class LivroService {
 
     private final LivroRepository livroRepository;
     private final EmprestimoRepository emprestimoRepository;
+    private final IntegracaoApiGoogleBooksService integracaoApiGoogleBooksService;
 
     @Autowired
-    public LivroService(LivroRepository livroRepository, EmprestimoRepository emprestimoRepository) {
+    public LivroService(LivroRepository livroRepository, EmprestimoRepository emprestimoRepository, IntegracaoApiGoogleBooksService integracaoApiGoogleBooksService) {
         this.livroRepository = livroRepository;
         this.emprestimoRepository = emprestimoRepository;
+        this.integracaoApiGoogleBooksService = integracaoApiGoogleBooksService;
     }
 
     @Transactional
@@ -43,5 +48,15 @@ public class LivroService {
     @Transactional
     public Livro atualizarLivro(Livro livro) {
         return this.livroRepository.save(livro);
+    }
+
+    public List<Livro> buscarNoGoogleBooks(String titulo) {
+        if (titulo.isBlank()) return new ArrayList<>();
+        return this.integracaoApiGoogleBooksService.buscarNoGoogleBooks(titulo);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Livro> buscarRecomendacoes(Long usuarioId) {
+        return this.livroRepository.buscarRecomendacoes(usuarioId);
     }
 }

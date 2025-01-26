@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/livro")
 public class LivroController {
@@ -37,4 +39,15 @@ public class LivroController {
     public ResponseEntity<Livro> atualizarLivro(@Valid @RequestBody Livro livro) {
         return ResponseEntity.ok(this.livroService.atualizarLivro(livro));
     }
+
+    @GetMapping("/buscar-recomendacoes/{usuarioId}")
+    public ResponseEntity<List<Livro>> buscarRecomendacoes(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(this.livroService.buscarRecomendacoes(usuarioId));
+    }
+
+    @GetMapping("/buscar-titulo-google-books")
+    public ResponseEntity<List<Livro>> buscarNoGoogleBooks(@RequestParam String titulo) {
+        return ResponseEntity.ok(this.livroService.buscarNoGoogleBooks(titulo));
+    }
+
 }

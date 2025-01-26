@@ -3,14 +3,17 @@ package com.gestao_biblioteca_backend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "livros")
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Livro {
 
     @Id
@@ -33,4 +36,11 @@ public class Livro {
     @NotBlank(message = "Obrigatório informar a categoria do livro")
     private String categoria;
 
+    public Livro(String titulo, String autor, String isbn, LocalDate dataPublicacao, String categoria) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.isbn = isbn;
+        this.dataPublicacao = dataPublicacao;
+        this.categoria = categoria;
+    }
 }

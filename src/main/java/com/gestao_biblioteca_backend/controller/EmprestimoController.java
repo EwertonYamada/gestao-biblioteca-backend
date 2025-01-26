@@ -3,6 +3,7 @@ package com.gestao_biblioteca_backend.controller;
 import com.gestao_biblioteca_backend.dto.EmprestimoDTO;
 import com.gestao_biblioteca_backend.model.Emprestimo;
 import com.gestao_biblioteca_backend.service.EmprestimoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class EmprestimoController {
     }
 
     @PostMapping("/emprestar-livro")
-    public ResponseEntity<Emprestimo> emprestarLivro(@RequestBody EmprestimoDTO emprestimoDTO) {
+    public ResponseEntity<Emprestimo> emprestarLivro(@Valid @RequestBody EmprestimoDTO emprestimoDTO) {
         return ResponseEntity.ok(this.emprestimoService.emprestarLivro(emprestimoDTO));
     }
 

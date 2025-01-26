@@ -3,19 +3,42 @@ package com.gestao_biblioteca_backend.dto;
 import com.gestao_biblioteca_backend.enums.StatusEmprestimo;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
+//@Getter
+//@Setter
 public class EmprestimoDTO {
     @NotNull
-    private Long usuarioId;
+    public Long usuarioId;
+    @Getter
     @NotNull
-    private Long livroId;
+    public Long livroId;
     @NotNull
-    private LocalDate dataEmprestimo;
+    public LocalDate dataEmprestimo;
     @NotNull
-    private LocalDate dataDevolucao;
+    public LocalDate dataDevolucao;
     @NotNull
-    private StatusEmprestimo status;
+    public StatusEmprestimo status;
+
+    public @NotNull Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public @NotNull Long getLivroId() {
+        return livroId;
+    }
+
+    public @NotNull LocalDate getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
+    public @NotNull LocalDate getDataDevolucao() {
+        return dataDevolucao;
+    }
+
+    public @NotNull StatusEmprestimo getStatus() {
+        return status;
+    }
 }
