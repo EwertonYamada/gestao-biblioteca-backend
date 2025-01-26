@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Service
@@ -41,7 +42,7 @@ public class EmprestimoService {
         emprestimo.setUsuario(usuario);
         emprestimo.setDataEmprestimo(emprestimoDTO.getDataEmprestimo());
         emprestimo.setDataDevolucao(emprestimoDTO.getDataDevolucao());
-        emprestimo.setStatus(emprestimoDTO.getStatus());
+        emprestimo.setStatus(StatusEmprestimo.ATIVO);
         return this.emprestimoRepository.save(emprestimo);
 
 //        return this.emprestimoRepository.save(Emprestimo.builder()
@@ -59,5 +60,9 @@ public class EmprestimoService {
         emprestimo.setDataDevolucao(LocalDate.now());
         emprestimo.setStatus(StatusEmprestimo.INATIVO);
         return this.emprestimoRepository.save(emprestimo);
+    }
+
+    public List<Emprestimo> buscarTodosEmprestimos() {
+        return this.emprestimoRepository.findAll();
     }
 }

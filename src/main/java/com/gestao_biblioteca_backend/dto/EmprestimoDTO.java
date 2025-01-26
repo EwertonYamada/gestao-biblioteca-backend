@@ -12,14 +12,17 @@ import java.time.LocalDate;
 public class EmprestimoDTO {
     @NotNull
     public Long usuarioId;
+
     @Getter
     @NotNull
     public Long livroId;
+
     @NotNull
     public LocalDate dataEmprestimo;
+
     @NotNull
     public LocalDate dataDevolucao;
-    @NotNull
+
     public StatusEmprestimo status;
 
     public @NotNull Long getUsuarioId() {

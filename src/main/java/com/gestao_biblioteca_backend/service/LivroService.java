@@ -59,4 +59,8 @@ public class LivroService {
     public List<Livro> buscarRecomendacoes(Long usuarioId) {
         return this.livroRepository.buscarRecomendacoes(usuarioId);
     }
+
+    public List<Livro> buscarTodosLivros() {
+        return this.livroRepository.findAll();
+    }
 }

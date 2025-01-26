@@ -50,4 +50,9 @@ public class LivroController {
         return ResponseEntity.ok(this.livroService.buscarNoGoogleBooks(titulo));
     }
 
+    @GetMapping("/buscar-todos")
+    public ResponseEntity<List<Livro>> buscarTodosLivros() {
+        return ResponseEntity.ok(this.livroService.buscarTodosLivros());
+    }
+
 }

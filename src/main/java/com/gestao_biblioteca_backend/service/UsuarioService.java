@@ -6,6 +6,8 @@ import com.gestao_biblioteca_backend.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UsuarioService {
 
@@ -41,5 +43,9 @@ public class UsuarioService {
     @Transactional
     public Usuario atualizarUsuario(Usuario usuario, Long id) {
         return this.usuarioRepository.save(usuario);
+    }
+
+    public List<Usuario> buscarTodosUsuarios() {
+        return this.usuarioRepository.findAll();
     }
 }

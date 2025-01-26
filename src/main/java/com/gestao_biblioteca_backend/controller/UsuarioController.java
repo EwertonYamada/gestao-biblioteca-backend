@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -35,5 +37,10 @@ public class UsuarioController {
     @PutMapping("/atualizar-usuario/{id}")
     public ResponseEntity<Usuario> atualizarUsuario(@Valid @RequestBody Usuario usuario, @PathVariable Long id) {
         return ResponseEntity.ok(this.usuarioService.atualizarUsuario(usuario, id));
+    }
+
+    @GetMapping("/buscar-todos")
+    public ResponseEntity<List<Usuario>> buscarTodosLivros() {
+        return ResponseEntity.ok(this.usuarioService.buscarTodosUsuarios());
     }
 }

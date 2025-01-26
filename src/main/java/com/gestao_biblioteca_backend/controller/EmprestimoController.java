@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/emprestimo")
 public class EmprestimoController {
@@ -25,5 +27,10 @@ public class EmprestimoController {
     @PutMapping("/devolver-livro/{emprestimoId}")
     public ResponseEntity<Emprestimo> devolverLivro(@PathVariable Long emprestimoId) {
         return ResponseEntity.ok(this.emprestimoService.devolverLivro(emprestimoId));
+    }
+
+    @GetMapping("/buscar-todos")
+    public ResponseEntity<List<Emprestimo>> buscarTodosEmprestimos() {
+        return ResponseEntity.ok(this.emprestimoService.buscarTodosEmprestimos());
     }
 }

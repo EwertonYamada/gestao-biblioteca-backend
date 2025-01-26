@@ -1,6 +1,5 @@
 package com.gestao_biblioteca_backend.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gestao_biblioteca_backend.enums.StatusEmprestimo;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,11 +24,9 @@ public class Emprestimo {
     private Livro livro;
 
     @Column(name = "data_emprestimo")
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataEmprestimo;
 
     @Column(name = "data_devolucao")
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDevolucao;
 
     @Enumerated(EnumType.STRING)
