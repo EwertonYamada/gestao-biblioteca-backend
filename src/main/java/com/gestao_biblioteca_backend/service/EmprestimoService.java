@@ -60,6 +60,7 @@ public class EmprestimoService {
         return this.emprestimoRepository.save(emprestimo);
     }
 
+    @Transactional(readOnly = true)
     public List<EmprestimoListDTO> buscarTodosEmprestimos() {
         return this.emprestimoRepository.buscarTodosEmprestimos();
     }

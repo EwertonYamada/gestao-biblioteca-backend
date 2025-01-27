@@ -1,10 +1,10 @@
 package com.gestao_biblioteca_backend.dto;
 
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.Date;
 
-@Data
+@Getter
 public class EmprestimoListDTO {
     private Long emprestimoId;
     private String titulo;

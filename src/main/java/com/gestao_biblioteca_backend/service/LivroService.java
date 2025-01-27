@@ -3,7 +3,6 @@ package com.gestao_biblioteca_backend.service;
 import com.gestao_biblioteca_backend.model.Livro;
 import com.gestao_biblioteca_backend.repository.EmprestimoRepository;
 import com.gestao_biblioteca_backend.repository.LivroRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ public class LivroService {
     private final EmprestimoRepository emprestimoRepository;
     private final IntegracaoApiGoogleBooksService integracaoApiGoogleBooksService;
 
-    @Autowired
     public LivroService(LivroRepository livroRepository, EmprestimoRepository emprestimoRepository, IntegracaoApiGoogleBooksService integracaoApiGoogleBooksService) {
         this.livroRepository = livroRepository;
         this.emprestimoRepository = emprestimoRepository;
@@ -60,10 +58,12 @@ public class LivroService {
         return this.livroRepository.buscarRecomendacoes(usuarioId);
     }
 
+    @Transactional(readOnly = true)
     public List<Livro> buscarTodosLivros() {
         return this.livroRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public List<Livro> buscarTodosDisponiveis() {
         return this.livroRepository.buscarLivrosDisponiveis();
     }

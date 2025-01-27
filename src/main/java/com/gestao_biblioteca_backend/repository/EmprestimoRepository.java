@@ -21,7 +21,7 @@ public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
 
     @Query(nativeQuery = true,
         value = " SELECT COUNT(*) > 0 " +
-                " FROM emprestimo e " +
+                " FROM emprestimos e " +
                 " WHERE e.usuario_id = :usuarioId" +
                 "   AND e.status = 'ATIVO'")
     Boolean verificarSeUsuarioPossuiEmprestimoAtivo(@Param("usuarioId") Long usuarioId);

@@ -47,6 +47,7 @@ public class UsuarioService {
         return this.usuarioRepository.save(usuario);
     }
 
+    @Transactional(readOnly = true)
     public List<Usuario> buscarTodosUsuarios() {
         return this.usuarioRepository.findAll();
     }

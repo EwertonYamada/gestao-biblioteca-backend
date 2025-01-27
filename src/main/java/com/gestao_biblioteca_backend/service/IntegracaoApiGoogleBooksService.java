@@ -5,7 +5,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -56,13 +55,41 @@ public class IntegracaoApiGoogleBooksService {
             List<String> authors = (List<String>) volumeInfo.get("authors");
 
             String title = (String) volumeInfo.get("title");
-            LocalDate publishedDate = LocalDate.parse(volumeInfo.get("publishedDate").toString(), FORMATO_AAAA_MM_DD);
-            String author = authors != null && !authors.isEmpty() ? authors.get(0) : "Autor não informado";
-            String isbn = industryIdentifiers != null && !industryIdentifiers.isEmpty() ? industryIdentifiers.get("identifier") : "ISBN não informado";
-            String category = categories != null && !categories.isEmpty() ? categories.get(0) : "Categoria não informada";
+            LocalDate publishedDate = this.pegarPublishedDate(volumeInfo);
+            String author = this.pegarAuthor(authors);
+            String isbn = this.pegarIsbn(industryIdentifiers);
+            String category = this.pegarCategory(categories);
 
             livros.add(new Livro(title, author, isbn, publishedDate, category));
         });
         return livros;
+    }
+
+    private LocalDate pegarPublishedDate(Map<String, Object> volumeInfo) {
+        return volumeInfo.get("publishedDate") != null
+                && !volumeInfo.get("publishedDate").toString().isBlank()
+                ? LocalDate.parse(volumeInfo.get("publishedDate").toString(), FORMATO_AAAA_MM_DD)
+                : LocalDate.now();
+    }
+
+    private String pegarAuthor(List<String> authors) {
+        return authors != null
+                && !authors.isEmpty()
+                ? authors.get(0)
+                : "Autor não informado";
+    }
+
+    private String pegarIsbn(Map<String, String> industryIdentifiers) {
+        return industryIdentifiers != null
+                && !industryIdentifiers.isEmpty()
+                ? industryIdentifiers.get("identifier")
+                : "ISBN não informado";
+    }
+
+    private String pegarCategory(List<String> categories) {
+        return categories != null
+                && !categories.isEmpty()
+                ? categories.get(0)
+                : "Categoria não informada";
     }
 }
