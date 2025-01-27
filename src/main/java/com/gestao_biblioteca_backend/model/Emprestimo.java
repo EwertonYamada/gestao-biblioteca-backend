@@ -6,10 +6,12 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "emprestimos")
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "emprestimos")
+@Builder
 public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,43 +34,4 @@ public class Emprestimo {
     @Enumerated(EnumType.STRING)
     private StatusEmprestimo status;
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Livro getLivro() {
-        return livro;
-    }
-
-    public void setLivro(Livro livro) {
-        this.livro = livro;
-    }
-
-    public LocalDate getDataEmprestimo() {
-        return dataEmprestimo;
-    }
-
-    public void setDataEmprestimo(LocalDate dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
-    }
-
-    public LocalDate getDataDevolucao() {
-        return dataDevolucao;
-    }
-
-    public void setDataDevolucao(LocalDate dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
-    }
-
-    public StatusEmprestimo getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusEmprestimo status) {
-        this.status = status;
-    }
 }

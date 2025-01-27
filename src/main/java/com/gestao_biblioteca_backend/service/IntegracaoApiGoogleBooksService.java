@@ -5,17 +5,17 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class IntegracaoApiGoogleBooksService {
 
     public static final String URL_BASE_GOOGLE_BOOKS = "https://www.googleapis.com";
-    public static final DateTimeFormatter FORMATO_DD_MM_AAAA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static final DateTimeFormatter FORMATO_DD_MM_AAAA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    public static final DateTimeFormatter FORMATO_AAAA_MM_DD = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public List<Livro> buscarNoGoogleBooks(String titulo) {
         ResponseEntity<Map> response = this.executarBusca(titulo);
@@ -51,15 +51,16 @@ public class IntegracaoApiGoogleBooksService {
         List<Livro> livros = new ArrayList<>();
         livrosGoogle.forEach(livro -> {
             Map<String, Object> volumeInfo = (Map<String, Object>) livro.get("volumeInfo");
-            List<String> industryIdentifiers = (List<String>) volumeInfo.get("industryIdentifiers");
+            Map<String, String> industryIdentifiers = volumeInfo.get("industryIdentifiers") != null ? ((List<Map<String, String>>) volumeInfo.get("industryIdentifiers")).get(0) : null;
             List<String> categories = (List<String>) volumeInfo.get("categories");
-            List<String> authors = (List<String>) volumeInfo.get("author");
+            List<String> authors = (List<String>) volumeInfo.get("authors");
 
             String title = (String) volumeInfo.get("title");
-            LocalDate publishedDate = LocalDate.parse((String) volumeInfo.get("publishedDate"), FORMATO_DD_MM_AAAA);
+            LocalDate publishedDate = LocalDate.parse(volumeInfo.get("publishedDate").toString(), FORMATO_AAAA_MM_DD);
             String author = authors != null && !authors.isEmpty() ? authors.get(0) : "Autor não informado";
-            String isbn = industryIdentifiers != null && !industryIdentifiers.isEmpty() ? industryIdentifiers.get(0) : "ISBN não informado";
+            String isbn = industryIdentifiers != null && !industryIdentifiers.isEmpty() ? industryIdentifiers.get("identifier") : "ISBN não informado";
             String category = categories != null && !categories.isEmpty() ? categories.get(0) : "Categoria não informada";
+
             livros.add(new Livro(title, author, isbn, publishedDate, category));
         });
         return livros;

@@ -45,8 +45,8 @@ public class LivroController {
         return ResponseEntity.ok(this.livroService.buscarRecomendacoes(usuarioId));
     }
 
-    @GetMapping("/buscar-titulo-google-books")
-    public ResponseEntity<List<Livro>> buscarNoGoogleBooks(@RequestParam String titulo) {
+    @GetMapping("/buscar-titulo-google-books/{titulo}")
+    public ResponseEntity<List<Livro>> buscarNoGoogleBooks(@PathVariable String titulo) {
         return ResponseEntity.ok(this.livroService.buscarNoGoogleBooks(titulo));
     }
 
@@ -55,4 +55,8 @@ public class LivroController {
         return ResponseEntity.ok(this.livroService.buscarTodosLivros());
     }
 
+    @GetMapping("/buscar-livros-disponiveis")
+    public ResponseEntity<List<Livro>> buscarTodosDisponiveis() {
+        return ResponseEntity.ok(this.livroService.buscarTodosDisponiveis());
+    }
 }

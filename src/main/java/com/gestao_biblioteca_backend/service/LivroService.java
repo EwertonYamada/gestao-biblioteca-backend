@@ -57,10 +57,14 @@ public class LivroService {
 
     @Transactional(readOnly = true)
     public List<Livro> buscarRecomendacoes(Long usuarioId) {
-        return this.livroRepository.buscarRecomendacoes(usuarioId);
+        return null;
     }
 
     public List<Livro> buscarTodosLivros() {
         return this.livroRepository.findAll();
+    }
+
+    public List<Livro> buscarTodosDisponiveis() {
+        return this.livroRepository.buscarLivrosDisponiveis();
     }
 }

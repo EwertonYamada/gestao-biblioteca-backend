@@ -1,6 +1,7 @@
 package com.gestao_biblioteca_backend.controller;
 
 import com.gestao_biblioteca_backend.dto.EmprestimoDTO;
+import com.gestao_biblioteca_backend.dto.EmprestimoListDTO;
 import com.gestao_biblioteca_backend.model.Emprestimo;
 import com.gestao_biblioteca_backend.service.EmprestimoService;
 import jakarta.validation.Valid;
@@ -30,7 +31,7 @@ public class EmprestimoController {
     }
 
     @GetMapping("/buscar-todos")
-    public ResponseEntity<List<Emprestimo>> buscarTodosEmprestimos() {
+    public ResponseEntity<List<EmprestimoListDTO>> buscarTodosEmprestimos() {
         return ResponseEntity.ok(this.emprestimoService.buscarTodosEmprestimos());
     }
 }

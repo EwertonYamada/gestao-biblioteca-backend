@@ -6,6 +6,7 @@ import com.gestao_biblioteca_backend.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -21,6 +22,7 @@ public class UsuarioService {
 
     @Transactional
     public Usuario criarUsuario(Usuario usuario) {
+        if (usuario.getDataCadastro().isAfter(LocalDate.now())) throw new RuntimeException("A data de cadastro deve ser inferior à data atual");
         return this.usuarioRepository.save(usuario);
     }
 

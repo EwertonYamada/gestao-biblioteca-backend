@@ -1,6 +1,7 @@
 package com.gestao_biblioteca_backend.service;
 
 import com.gestao_biblioteca_backend.dto.EmprestimoDTO;
+import com.gestao_biblioteca_backend.dto.EmprestimoListDTO;
 import com.gestao_biblioteca_backend.enums.StatusEmprestimo;
 import com.gestao_biblioteca_backend.model.Emprestimo;
 import com.gestao_biblioteca_backend.model.Livro;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-
 
 @Service
 public class EmprestimoService {
@@ -34,7 +34,7 @@ public class EmprestimoService {
 
     @Transactional
     public Emprestimo emprestarLivro(EmprestimoDTO emprestimoDTO) {
-        if (this.verificarSeLivroTemEmprestimoAtivo(emprestimoDTO.getLivroId())) throw new RuntimeException("O livro já possui um empréstimo ativo!");
+        this.validacoes(emprestimoDTO);
         Livro livro = this.livroService.buscarLivroPeloId(emprestimoDTO.getLivroId());
         Usuario usuario = this.usuarioService.buscarUsuarioPeloId(emprestimoDTO.getUsuarioId());
         Emprestimo emprestimo = new Emprestimo();
@@ -44,14 +44,12 @@ public class EmprestimoService {
         emprestimo.setDataDevolucao(emprestimoDTO.getDataDevolucao());
         emprestimo.setStatus(StatusEmprestimo.ATIVO);
         return this.emprestimoRepository.save(emprestimo);
+    }
 
-//        return this.emprestimoRepository.save(Emprestimo.builder()
-//                .livro(livro)
-//                .usuario(usuario)
-//                .dataEmprestimo(emprestimoDTO.getDataEmprestimo())
-//                .dataDevolucao(emprestimoDTO.getDataDevolucao())
-//                .status(emprestimoDTO.getStatus())
-//                .build());
+    private void validacoes(EmprestimoDTO emprestimoDTO) {
+        if (this.verificarSeLivroTemEmprestimoAtivo(emprestimoDTO.getLivroId())) throw new RuntimeException("O livro já possui um empréstimo ativo!");
+        if (emprestimoDTO.getDataEmprestimo().isAfter(LocalDate.now())) throw new RuntimeException("A data de empréstimo não pode ser maior do que a atual!");
+        if (emprestimoDTO.getDataDevolucao().isBefore(emprestimoDTO.getDataEmprestimo())) throw new RuntimeException("A data de devolução não pode ser menor do que a data de empréstimo!");
     }
 
     @Transactional
@@ -62,7 +60,7 @@ public class EmprestimoService {
         return this.emprestimoRepository.save(emprestimo);
     }
 
-    public List<Emprestimo> buscarTodosEmprestimos() {
-        return this.emprestimoRepository.findAll();
+    public List<EmprestimoListDTO> buscarTodosEmprestimos() {
+        return this.emprestimoRepository.buscarTodosEmprestimos();
     }
 }

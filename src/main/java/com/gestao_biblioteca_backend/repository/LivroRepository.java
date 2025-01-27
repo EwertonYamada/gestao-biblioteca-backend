@@ -24,4 +24,14 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
                 "   FROM emprestimos em " +
                 "   WHERE em.usuario_id = :usuarioId )")
     List<Livro> buscarRecomendacoes(@Param("usuarioId") Long usuarioId);
+
+    @Query(nativeQuery = true,
+            value = " SELECT l.* " +
+                    " FROM livros l " +
+                    " WHERE " +
+                    "   l.id NOT IN ( " +
+                    "   SELECT e.livro_id " +
+                    "   FROM emprestimos e " +
+                    "   WHERE e.status = 'ATIVO') ")
+    List<Livro> buscarLivrosDisponiveis();
 }
