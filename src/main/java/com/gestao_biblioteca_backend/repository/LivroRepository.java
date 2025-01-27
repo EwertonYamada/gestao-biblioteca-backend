@@ -15,14 +15,15 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
                 " FROM livros l " +
                 " WHERE l.categoria IN (" +
                 "   SELECT DISTINCT li.categoria " +
-                "   FROM livos li " +
+                "   FROM livros li " +
                 "   INNER JOIN emprestimos e ON " +
                 "       e.livro_id = li.id " +
-                "   WHERE e.usuario_id = :usuarioId)) " +
+                "   WHERE e.usuario_id = :usuarioId) " +
                 " AND l.id NOT IN ( " +
                 "   SELECT em.livro_id " +
                 "   FROM emprestimos em " +
-                "   WHERE em.usuario_id = :usuarioId )")
+                "   WHERE em.usuario_id = :usuarioId) " +
+                " ORDER BY l.titulo ASC ")
     List<Livro> buscarRecomendacoes(@Param("usuarioId") Long usuarioId);
 
     @Query(nativeQuery = true,
@@ -32,6 +33,7 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
                     "   l.id NOT IN ( " +
                     "   SELECT e.livro_id " +
                     "   FROM emprestimos e " +
-                    "   WHERE e.status = 'ATIVO') ")
+                    "   WHERE e.status = 'ATIVO') " +
+                    " ORDER BY l.titulo ASC")
     List<Livro> buscarLivrosDisponiveis();
 }

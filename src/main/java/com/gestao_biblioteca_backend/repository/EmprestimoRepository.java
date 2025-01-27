@@ -32,12 +32,14 @@ public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
                 "   l.titulo AS titulo, " +
                 "   u.nome AS nomeUsuario, " +
                 "   e.data_emprestimo AS dataEmprestimo, " +
-                "   e.data_devolucao AS dataDevolucao " +
+                "   e.data_devolucao AS dataDevolucao, " +
+                "   e.status AS status" +
                 " FROM " +
                 "   emprestimos e " +
                 " INNER JOIN usuarios u ON " +
                 "   u.id = e.usuario_id " +
                 " INNER JOIN livros l ON " +
-                "   l.id = e.livro_id ")
+                "   l.id = e.livro_id " +
+                " ORDER BY e.id DESC ")
     List<EmprestimoListDTO> buscarTodosEmprestimos();
 }
